@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 IT Career Pathway Explorer
+
+An interactive, game-like roadmap for exploring IT careers — pick a career and immediately see what to learn, in what order, with real courses, certifications, and project ideas.
+
+Built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS v4**, and **Framer Motion**.
+
+## Features
+
+- **20 IT careers** (Frontend, Backend, Full-Stack, Software Engineer, Game Dev, Cybersecurity, AI Engineer, Data Scientist, Data Engineer, Cloud Engineer, DevOps, Network Engineer, SysAdmin, Mobile Dev, Database Engineer, Robotics, Embedded, UI/UX, AR/VR, QA), each with its own uniquely structured pathway — no two careers are forced into the same template.
+- **Interactive skill-tree pathway** per career: click any node to open a detail panel with what it is, what it's used for, what to learn, prerequisites, next steps, recommended resources (best/free/job-focused), and project ideas.
+- **Progress tracking** (localStorage-based) with sequential skill-tree gating — nodes unlock as you complete the ones before them.
+- **Career Finder** — a short quiz that matches you to careers by similarity scoring across ten dimensions.
+- **Compare Careers** — side-by-side visual comparison of up to three careers.
+- **Global search** (⌘K / Ctrl+K) across careers, languages, frameworks, tools, and certifications.
+- **Technologies** and **Projects** index pages for browsing the full content library.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  types/        # Shared TypeScript types for careers & learning items
+  data/
+    items/      # Shared library of languages, frameworks, tools, certifications, concepts
+    careers/    # Per-category career definitions + pathway structures
+    quiz.ts     # Career Finder quiz questions & matching logic
+  lib/          # Progress tracking, search, utilities
+  components/   # UI, organized by feature (home, career, finder, compare, technologies, projects, shared)
+  app/          # Next.js App Router routes
+```
 
-## Learn More
+Content is fully separated from UI — adding a new career or technology only requires editing `src/data`.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` — start the dev server
+- `npm run build` — production build
+- `npm run lint` — lint the project
