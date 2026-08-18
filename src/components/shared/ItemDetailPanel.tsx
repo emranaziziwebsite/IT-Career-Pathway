@@ -10,20 +10,22 @@ import {
   Briefcase,
   BadgeCheck,
   Hammer,
+  Clock,
 } from "lucide-react";
 import { getItem } from "@/data/items";
 import { careersUsingItem } from "@/lib/search";
 import { ResourceType } from "@/types";
 import { cn } from "@/lib/utils";
+import { hoursForDifficulty } from "@/lib/estimate";
 import { useLocale } from "@/i18n/LocaleContext";
 import { translateItem, translateItemCategory, translateCareer } from "@/i18n/content/translate";
 import { TranslationKey } from "@/i18n/dictionary";
 
 const resourceMeta: Record<ResourceType, { key: TranslationKey; icon: React.ReactNode; color: string }> = {
-  best: { key: "item.resourceBest", icon: <Trophy size={14} />, color: "text-amber-600 bg-amber-500/10" },
-  free: { key: "item.resourceFree", icon: <Gift size={14} />, color: "text-emerald-600 bg-emerald-500/10" },
-  "job-focused": { key: "item.resourceJob", icon: <Briefcase size={14} />, color: "text-cyan-600 bg-cyan-500/10" },
-  certification: { key: "item.resourceCert", icon: <BadgeCheck size={14} />, color: "text-violet-600 bg-violet-500/10" },
+  best: { key: "item.resourceBest", icon: <Trophy size={14} />, color: "text-amber-300 bg-amber-500/10" },
+  free: { key: "item.resourceFree", icon: <Gift size={14} />, color: "text-emerald-300 bg-emerald-500/10" },
+  "job-focused": { key: "item.resourceJob", icon: <Briefcase size={14} />, color: "text-lime-300 bg-lime-500/10" },
+  certification: { key: "item.resourceCert", icon: <BadgeCheck size={14} />, color: "text-teal-300 bg-teal-500/10" },
 };
 
 export default function ItemDetailPanel({
@@ -47,14 +49,14 @@ export default function ItemDetailPanel({
       {open && item && rawItem && (
         <>
           <motion.div
-            className="fixed inset-0 z-[90] bg-slate-900/50 backdrop-blur-sm"
+            className="fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
           <motion.aside
-            className="glass fixed end-0 top-0 z-[95] h-full w-full max-w-md overflow-y-auto shadow-2xl shadow-slate-900/20 sm:max-w-lg"
+            className="glass fixed end-0 top-0 z-[95] h-full w-full max-w-md overflow-y-auto shadow-2xl shadow-black/60 sm:max-w-lg"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -62,19 +64,22 @@ export default function ItemDetailPanel({
           >
             <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-border-soft bg-surface/90 px-6 py-5 backdrop-blur-md">
               <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-black/5 text-2xl">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-2xl">
                   {rawItem.emoji}
                 </span>
                 <div>
                   <h2 className="font-display text-lg font-bold text-text-primary">{item.name}</h2>
-                  <p className="text-xs uppercase tracking-wide text-text-muted">
+                  <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-text-muted">
                     {translateItemCategory(rawItem.category, locale)} · {t(`level.${rawItem.difficulty}` as TranslationKey)}
+                    <span className="flex items-center gap-0.5 text-emerald-400">
+                      · <Clock size={11} /> ~{hoursForDifficulty(rawItem.difficulty)}h {t("item.hoursToLearn")}
+                    </span>
                   </p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="rounded-full p-1.5 text-text-muted hover:bg-black/5 hover:text-text-primary"
+                className="rounded-full p-1.5 text-text-muted hover:bg-emerald-500/10 hover:text-text-primary"
               >
                 <X size={18} />
               </button>
@@ -97,7 +102,7 @@ export default function ItemDetailPanel({
                 <ul className="space-y-1.5">
                   {item.learn.map((l) => (
                     <li key={l} className="flex items-start gap-2 text-sm text-text-secondary">
-                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-cyan-400" />
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-400" />
                       {l}
                     </li>
                   ))}
@@ -144,10 +149,9 @@ export default function ItemDetailPanel({
 
               <div>
                 <SectionLabel>{t("item.recommendedResources")}</SectionLabel>
-                <p className="mb-2 text-xs text-text-muted">{t("item.resourcesNote")}</p>
                 <div className="space-y-2">
                   {rawItem.resources.map((r, i) => (
-                    <div key={i} className="rounded-xl border border-border-soft bg-black/[0.02] p-3">
+                    <div key={i} className="rounded-xl border border-border-soft bg-white/[0.02] p-3">
                       <div className="flex items-center justify-between">
                         <span
                           className={cn(
@@ -174,7 +178,7 @@ export default function ItemDetailPanel({
                 <ul className="space-y-1.5">
                   {item.projects.map((p) => (
                     <li key={p} className="flex items-start gap-2 text-sm text-text-secondary">
-                      <Hammer size={13} className="mt-0.5 shrink-0 text-violet-400" />
+                      <Hammer size={13} className="mt-0.5 shrink-0 text-lime-400" />
                       {p}
                     </li>
                   ))}
@@ -216,8 +220,8 @@ function Chip({ children, interactive }: { children: React.ReactNode; interactiv
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-border-soft bg-black/[0.03] px-3 py-1 text-xs font-medium text-text-secondary",
-        interactive && "cursor-pointer transition-colors hover:border-border-strong hover:bg-black/5 hover:text-text-primary"
+        "inline-flex items-center rounded-full border border-border-soft bg-white/[0.03] px-3 py-1 text-xs font-medium text-text-secondary",
+        interactive && "cursor-pointer transition-colors hover:border-border-strong hover:bg-emerald-500/10 hover:text-text-primary"
       )}
     >
       {children}

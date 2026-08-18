@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Clock } from "lucide-react";
 import { Career } from "@/types";
 import { estimateMonths } from "@/lib/estimate";
+import { useStudyPace } from "@/lib/studyPace";
 import { useLocale } from "@/i18n/LocaleContext";
 import { translateCareer, translateCategory } from "@/i18n/content/translate";
 
@@ -12,7 +13,8 @@ const difficultyDots = 5;
 
 export default function CareerCard({ career: rawCareer, index }: { career: Career; index: number }) {
   const { t, locale } = useLocale();
-  const months = estimateMonths(rawCareer);
+  const { hoursPerWeek } = useStudyPace();
+  const months = estimateMonths(rawCareer, hoursPerWeek);
   const career = translateCareer(rawCareer, locale);
 
   return (
@@ -52,14 +54,14 @@ export default function CareerCard({ career: rawCareer, index }: { career: Caree
                   <span
                     key={i}
                     className={`h-1.5 w-1.5 rounded-full ${
-                      i < rawCareer.stats.difficulty ? "bg-gradient-to-br " + rawCareer.color : "bg-black/10"
+                      i < rawCareer.stats.difficulty ? "bg-gradient-to-br " + rawCareer.color : "bg-white/10"
                     }`}
                   />
                 ))}
               </div>
               <span className="flex items-center gap-1 text-[11px] text-text-muted">
                 <Clock size={11} />
-                ~{months} {t("home.monthsAt10h")}
+                ~{months} {t("roadmap.months")} @ {hoursPerWeek}{t("roadmap.hoursWeekShort")}
               </span>
             </div>
           </div>

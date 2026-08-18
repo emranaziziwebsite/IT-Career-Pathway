@@ -25,7 +25,7 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
     <header className="sticky top-0 z-50 border-b border-border-soft bg-void/80 backdrop-blur-lg">
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-bold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 via-violet-500 to-pink-500 text-base shadow-lg shadow-violet-500/30">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 via-green-500 to-lime-400 text-base shadow-lg shadow-green-500/30">
             <Rocket size={16} className="text-white" />
           </span>
           <span className="hidden text-gradient sm:inline">{t("nav.brand")}</span>
@@ -41,8 +41,8 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
                 className={cn(
                   "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
                   active
-                    ? "bg-white/60 text-text-primary"
-                    : "text-text-secondary hover:bg-white/40 hover:text-text-primary"
+                    ? "bg-emerald-500/15 text-emerald-300"
+                    : "text-text-secondary hover:bg-emerald-500/10 hover:text-text-primary"
                 )}
               >
                 {link.label}
@@ -114,8 +114,8 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
               className={cn(
                 "rounded-lg px-3 py-2 text-sm font-medium",
                 pathname === link.href
-                  ? "bg-white/60 text-text-primary"
-                  : "text-text-secondary hover:bg-white/40"
+                  ? "bg-emerald-500/15 text-emerald-300"
+                  : "text-text-secondary hover:bg-emerald-500/10"
               )}
             >
               {link.label}

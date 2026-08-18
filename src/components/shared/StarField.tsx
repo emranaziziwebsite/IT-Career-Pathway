@@ -12,11 +12,11 @@ interface Blob {
 }
 
 const colors = [
-  "rgba(34,211,238,0.18)",
-  "rgba(167,139,250,0.18)",
-  "rgba(244,114,182,0.16)",
-  "rgba(251,191,36,0.16)",
-  "rgba(52,211,153,0.16)",
+  "rgba(34,197,94,0.22)",
+  "rgba(74,222,128,0.18)",
+  "rgba(163,230,53,0.16)",
+  "rgba(45,212,191,0.16)",
+  "rgba(21,128,61,0.22)",
 ];
 
 export default function StarField({ count = 8 }: { count?: number }) {

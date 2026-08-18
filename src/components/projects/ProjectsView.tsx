@@ -32,7 +32,7 @@ export default function ProjectsView() {
             className={cn(
               "shrink-0 rounded-full border-2 px-3.5 py-1.5 text-xs font-semibold transition-colors",
               category === cat
-                ? "border-transparent bg-gradient-to-r from-cyan-500 to-violet-500 text-white"
+                ? "border-transparent bg-gradient-to-r from-emerald-500 to-green-600 text-white"
                 : "border-border-soft bg-surface text-text-secondary hover:border-border-strong hover:text-text-primary"
             )}
           >
@@ -83,7 +83,7 @@ export default function ProjectsView() {
 
               <Link
                 href={`/careers/${rawCareer.slug}`}
-                className="mt-1 inline-block text-xs font-semibold text-cyan-600 hover:text-cyan-700"
+                className="mt-1 inline-block text-xs font-semibold text-emerald-400 hover:text-emerald-300"
               >
                 {t("projects.seeFullPathway")}
               </Link>

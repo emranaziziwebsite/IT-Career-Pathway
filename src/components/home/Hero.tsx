@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 import { useLocale } from "@/i18n/LocaleContext";
 
 const floatingEmojis = [
@@ -38,7 +38,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-border-soft bg-surface px-4 py-1.5 text-xs font-medium text-text-secondary shadow-sm"
         >
-          <Sparkles size={13} className="text-cyan-500" />
+          <Sparkles size={13} className="text-emerald-400" />
           {t("hero.badge")}
         </motion.div>
 
@@ -68,10 +68,21 @@ export default function Hero() {
         >
           <a
             href="#careers"
-            className="rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-transform hover:scale-105"
+            className="rounded-full bg-gradient-to-r from-emerald-500 via-green-500 to-lime-400 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-green-500/30 transition-transform hover:scale-105"
           >
             {t("hero.cta")}
           </a>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs font-medium text-text-muted"
+        >
+          <span className="rounded-full border border-border-soft bg-surface px-3 py-1">{t("home.step1")}</span>
+          <ArrowRight size={12} className="text-emerald-500" />
+          <span className="rounded-full border border-border-soft bg-surface px-3 py-1">{t("home.step2")}</span>
         </motion.div>
       </div>
     </section>

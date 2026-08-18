@@ -53,7 +53,7 @@ export default function CompareCard({ career: rawCareer, onRemove }: { career: C
                 <span>{t(row.labelKey)}</span>
                 <span>{value}/5</span>
               </div>
-              <div className="h-1.5 w-full overflow-hidden rounded-full bg-black/5">
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/5">
                 <div
                   className={`h-full rounded-full bg-gradient-to-r ${rawCareer.color}`}
                   style={{ width: `${(value / 5) * 100}%` }}
@@ -115,7 +115,7 @@ export default function CompareCard({ career: rawCareer, onRemove }: { career: C
 
       <Link
         href={`/careers/${rawCareer.slug}`}
-        className="mt-4 block rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 px-4 py-2 text-center text-xs font-semibold text-white hover:opacity-90"
+        className="mt-4 block rounded-full bg-gradient-to-r from-emerald-500 to-green-600 px-4 py-2 text-center text-xs font-semibold text-white hover:opacity-90"
       >
         {t("compare.viewFullPathway")}
       </Link>
@@ -137,7 +137,7 @@ function ChipRow({ items }: { items: string[] }) {
   return (
     <div className="flex flex-wrap gap-1.5">
       {items.map((i) => (
-        <span key={i} className="rounded-full bg-black/5 px-2 py-0.5 text-[11px] text-text-secondary">
+        <span key={i} className="rounded-full bg-white/5 px-2 py-0.5 text-[11px] text-text-secondary">
           {i}
         </span>
       ))}

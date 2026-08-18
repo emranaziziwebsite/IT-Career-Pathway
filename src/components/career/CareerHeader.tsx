@@ -44,7 +44,7 @@ export default function CareerHeader({ career: rawCareer }: { career: Career }) 
                 <span
                   key={i}
                   className={`h-1.5 w-4 rounded-full ${
-                    i < rawCareer.stats.difficulty ? `bg-gradient-to-r ${rawCareer.color}` : "bg-black/10"
+                    i < rawCareer.stats.difficulty ? `bg-gradient-to-r ${rawCareer.color}` : "bg-white/10"
                   }`}
                 />
               ))}
@@ -67,7 +67,7 @@ export default function CareerHeader({ career: rawCareer }: { career: Career }) 
               {career.specializations.map((s) => (
                 <span
                   key={s}
-                  className="rounded-full border border-border-soft bg-black/5 px-3 py-1 text-xs text-text-secondary"
+                  className="rounded-full border border-border-soft bg-white/5 px-3 py-1 text-xs text-text-secondary"
                 >
                   {s}
                 </span>
@@ -90,7 +90,7 @@ export default function CareerHeader({ career: rawCareer }: { career: Career }) 
                   <Link
                     key={id}
                     href={`/careers/${rc.slug}`}
-                    className="rounded-full border border-border-soft bg-black/5 px-3 py-1 text-xs text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary"
+                    className="rounded-full border border-border-soft bg-white/5 px-3 py-1 text-xs text-text-secondary transition-colors hover:border-border-strong hover:text-text-primary"
                   >
                     {rc.emoji} {rcT.name}
                   </Link>

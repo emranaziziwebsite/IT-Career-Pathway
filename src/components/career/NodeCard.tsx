@@ -39,7 +39,7 @@ export default function NodeCard({
         onClick={onClick}
         whileHover={{ scale: 1.03, y: -2 }}
         whileTap={{ scale: 0.98 }}
-        className="flex min-w-[132px] flex-col items-center gap-1.5 rounded-2xl border-2 border-dashed border-violet-300 bg-violet-50 px-4 py-3.5 text-center transition-colors hover:bg-violet-100"
+        className="flex min-w-[132px] flex-col items-center gap-1.5 rounded-2xl border-2 border-dashed border-lime-400/40 bg-lime-500/10 px-4 py-3.5 text-center transition-colors hover:bg-lime-500/15"
       >
         <span className="text-2xl">{node.emoji ?? <Hammer size={20} />}</span>
         <span className="text-xs font-semibold text-text-primary">{node.label}</span>

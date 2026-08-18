@@ -31,7 +31,7 @@ export default function CareerGrid({ careers, categories }: { careers: Career[];
             className={cn(
               "shrink-0 rounded-full border-2 px-4 py-1.5 text-sm font-semibold transition-all",
               active === cat
-                ? "border-transparent bg-gradient-to-r from-cyan-500 to-violet-500 text-white shadow-lg shadow-violet-500/20"
+                ? "border-transparent bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-lg shadow-green-500/20"
                 : "border-border-soft bg-surface text-text-secondary hover:border-border-strong hover:text-text-primary"
             )}
           >

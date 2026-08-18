@@ -35,12 +35,12 @@ export default function ProjectGroupModal({
           >
             <button
               onClick={onClose}
-              className="absolute end-4 top-4 rounded-full p-1.5 text-text-muted hover:bg-black/5 hover:text-text-primary"
+              className="absolute end-4 top-4 rounded-full p-1.5 text-text-muted hover:bg-emerald-500/10 hover:text-text-primary"
             >
               <X size={16} />
             </button>
             <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/15 text-2xl">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-lime-500/15 text-2xl">
                 {node.emoji ?? "🛠️"}
               </span>
               <h3 className="font-display text-lg font-bold text-text-primary">{node.label}</h3>
@@ -48,7 +48,7 @@ export default function ProjectGroupModal({
             <ul className="space-y-2.5">
               {node.projects?.map((p) => (
                 <li key={p} className="flex items-start gap-2 text-sm text-text-secondary">
-                  <Hammer size={13} className="mt-0.5 shrink-0 text-violet-400" />
+                  <Hammer size={13} className="mt-0.5 shrink-0 text-lime-400" />
                   {p}
                 </li>
               ))}

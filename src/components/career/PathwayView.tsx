@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Career, PathwayNode } from "@/types";
 import { getFirstNodeId } from "@/lib/pathway";
-import { estimateMonths } from "@/lib/estimate";
 import { useLocale } from "@/i18n/LocaleContext";
 import { translateCareer } from "@/i18n/content/translate";
 import PathwaySectionRow from "./PathwaySectionRow";
@@ -17,7 +16,6 @@ export default function PathwayView({ career: rawCareer }: { career: Career }) {
   const { locale } = useLocale();
 
   const career = translateCareer(rawCareer, locale);
-  const months = estimateMonths(rawCareer);
   const firstNodeId = getFirstNodeId(career.pathway);
 
   const nodesById: Record<string, PathwayNode> = {};
@@ -38,7 +36,7 @@ export default function PathwayView({ career: rawCareer }: { career: Career }) {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
       <div className="mb-10">
-        <RoadmapIntro sections={career.pathway} estimatedMonths={months} />
+        <RoadmapIntro sections={career.pathway} />
       </div>
 
       <div className="space-y-2">
