@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --void: #070a08;
-  --surface: #0f1712;
-  --surface-2: #17211a;
-  --border-soft: rgba(74, 222, 128, 0.16);
-  --border-strong: rgba(74, 222, 128, 0.36);
-  --text-primary: #eefbf1;
-  --text-secondary: #a6c2ae;
-  --text-muted: #6f8a78;
+  --void: #050505;
+  --surface: #131313;
+  --surface-2: #1d1d1f;
+  --border-soft: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --text-primary: #f5f5f5;
+  --text-secondary: #a3a3a8;
+  --text-muted: #717177;
   --accent-cyan: #22d3ee;
   --accent-violet: #a78bfa;
   --accent-pink: #f472b6;
   --accent-amber: #fbbf24;
-  --accent-green: #22c55e;
-  --accent-green-2: #4ade80;
+  --accent-mono: #ffffff;
+  --accent-mono-2: #d4d4d8;
 }
 
 @theme inline {
@@ -70,14 +70,14 @@ body {
 
 /* ---------- Reusable design primitives ---------- */
 .glass {
-  background: linear-gradient(180deg, rgba(23, 33, 26, 0.9), rgba(15, 23, 18, 0.82));
+  background: linear-gradient(180deg, rgba(29, 29, 31, 0.9), rgba(19, 19, 19, 0.82));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-soft);
 }
 
 .text-gradient {
-  background-image: linear-gradient(90deg, #4ade80, #22c55e, #a3e635);
+  background-image: linear-gradient(90deg, #ffffff, #c4c4c9, #ffffff);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -85,13 +85,13 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(rgba(74, 222, 128, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74, 222, 128, 0.07) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
 .bg-radial-fade {
-  background: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.16), transparent 60%);
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -103,12 +103,12 @@ body {
 
 /* ---------- Cartoon "pop" card: chunky offset shadow that lifts on hover ---------- */
 .toon-card {
-  box-shadow: 3px 5px 0 0 rgba(74, 222, 128, 0.12), 0 10px 24px -10px rgba(0, 0, 0, 0.55);
+  box-shadow: 3px 5px 0 0 rgba(255, 255, 255, 0.14), 0 10px 24px -10px rgba(0, 0, 0, 0.55);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .toon-card:hover {
   transform: translate(-2px, -3px);
-  box-shadow: 5px 8px 0 0 rgba(74, 222, 128, 0.22), 0 16px 30px -10px rgba(0, 0, 0, 0.6);
+  box-shadow: 5px 8px 0 0 rgba(255, 255, 255, 0.24), 0 16px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
 /* ---------- Motion ---------- */

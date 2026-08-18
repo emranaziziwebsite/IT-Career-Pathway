@@ -38,7 +38,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-border-soft bg-surface px-4 py-1.5 text-xs font-medium text-text-secondary shadow-sm"
         >
-          <Sparkles size={13} className="text-emerald-400" />
+          <Sparkles size={13} className="text-white/70" />
           {t("hero.badge")}
         </motion.div>
 
@@ -68,7 +68,7 @@ export default function Hero() {
         >
           <a
             href="#careers"
-            className="rounded-full bg-gradient-to-r from-emerald-500 via-green-500 to-lime-400 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-green-500/30 transition-transform hover:scale-105"
+            className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-white/20 transition-transform hover:scale-105"
           >
             {t("hero.cta")}
           </a>
@@ -81,7 +81,7 @@ export default function Hero() {
           className="mt-6 flex flex-wrap items-center justify-center gap-2 text-xs font-medium text-text-muted"
         >
           <span className="rounded-full border border-border-soft bg-surface px-3 py-1">{t("home.step1")}</span>
-          <ArrowRight size={12} className="text-emerald-500" />
+          <ArrowRight size={12} className="text-white/60" />
           <span className="rounded-full border border-border-soft bg-surface px-3 py-1">{t("home.step2")}</span>
         </motion.div>
       </div>

@@ -56,7 +56,7 @@ export default function RoadmapIntro({ sections }: { sections: PathwaySection[] 
           >
             <Minus size={13} />
           </button>
-          <span className="min-w-[64px] text-center font-display text-sm font-bold text-emerald-400">
+          <span className="min-w-[64px] text-center font-display text-sm font-bold text-text-primary">
             {hoursPerWeek} {t("roadmap.hoursWeekShort")}
           </span>
           <button
@@ -75,7 +75,7 @@ export default function RoadmapIntro({ sections }: { sections: PathwaySection[] 
 function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="flex items-center gap-3 rounded-2xl bg-surface-2 px-4 py-3">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-md">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-text-primary shadow-md">
         {icon}
       </span>
       <div>

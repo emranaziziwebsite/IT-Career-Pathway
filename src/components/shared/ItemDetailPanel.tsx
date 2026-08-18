@@ -23,8 +23,8 @@ import { TranslationKey } from "@/i18n/dictionary";
 
 const resourceMeta: Record<ResourceType, { key: TranslationKey; icon: React.ReactNode; color: string }> = {
   best: { key: "item.resourceBest", icon: <Trophy size={14} />, color: "text-amber-300 bg-amber-500/10" },
-  free: { key: "item.resourceFree", icon: <Gift size={14} />, color: "text-emerald-300 bg-emerald-500/10" },
-  "job-focused": { key: "item.resourceJob", icon: <Briefcase size={14} />, color: "text-lime-300 bg-lime-500/10" },
+  free: { key: "item.resourceFree", icon: <Gift size={14} />, color: "text-zinc-200 bg-white/10" },
+  "job-focused": { key: "item.resourceJob", icon: <Briefcase size={14} />, color: "text-zinc-400 bg-white/5" },
   certification: { key: "item.resourceCert", icon: <BadgeCheck size={14} />, color: "text-teal-300 bg-teal-500/10" },
 };
 
@@ -64,14 +64,14 @@ export default function ItemDetailPanel({
           >
             <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-border-soft bg-surface/90 px-6 py-5 backdrop-blur-md">
               <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-2xl">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-2xl">
                   {rawItem.emoji}
                 </span>
                 <div>
                   <h2 className="font-display text-lg font-bold text-text-primary">{item.name}</h2>
                   <p className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-text-muted">
                     {translateItemCategory(rawItem.category, locale)} · {t(`level.${rawItem.difficulty}` as TranslationKey)}
-                    <span className="flex items-center gap-0.5 text-emerald-400">
+                    <span className="flex items-center gap-0.5 text-white/70">
                       · <Clock size={11} /> ~{hoursForDifficulty(rawItem.difficulty)}h {t("item.hoursToLearn")}
                     </span>
                   </p>
@@ -79,7 +79,7 @@ export default function ItemDetailPanel({
               </div>
               <button
                 onClick={onClose}
-                className="rounded-full p-1.5 text-text-muted hover:bg-emerald-500/10 hover:text-text-primary"
+                className="rounded-full p-1.5 text-text-muted hover:bg-white/10 hover:text-text-primary"
               >
                 <X size={18} />
               </button>
@@ -102,7 +102,7 @@ export default function ItemDetailPanel({
                 <ul className="space-y-1.5">
                   {item.learn.map((l) => (
                     <li key={l} className="flex items-start gap-2 text-sm text-text-secondary">
-                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-400" />
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-white/60" />
                       {l}
                     </li>
                   ))}
@@ -178,7 +178,7 @@ export default function ItemDetailPanel({
                 <ul className="space-y-1.5">
                   {item.projects.map((p) => (
                     <li key={p} className="flex items-start gap-2 text-sm text-text-secondary">
-                      <Hammer size={13} className="mt-0.5 shrink-0 text-lime-400" />
+                      <Hammer size={13} className="mt-0.5 shrink-0 text-white/60" />
                       {p}
                     </li>
                   ))}
@@ -221,7 +221,7 @@ function Chip({ children, interactive }: { children: React.ReactNode; interactiv
     <span
       className={cn(
         "inline-flex items-center rounded-full border border-border-soft bg-white/[0.03] px-3 py-1 text-xs font-medium text-text-secondary",
-        interactive && "cursor-pointer transition-colors hover:border-border-strong hover:bg-emerald-500/10 hover:text-text-primary"
+        interactive && "cursor-pointer transition-colors hover:border-border-strong hover:bg-white/10 hover:text-text-primary"
       )}
     >
       {children}

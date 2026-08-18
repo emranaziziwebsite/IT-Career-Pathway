@@ -39,7 +39,7 @@ export default function NodeCard({
         onClick={onClick}
         whileHover={{ scale: 1.03, y: -2 }}
         whileTap={{ scale: 0.98 }}
-        className="flex min-w-[132px] flex-col items-center gap-1.5 rounded-2xl border-2 border-dashed border-lime-400/40 bg-lime-500/10 px-4 py-3.5 text-center transition-colors hover:bg-lime-500/15"
+        className="flex min-w-[132px] flex-col items-center gap-1.5 rounded-2xl border-2 border-dashed border-white/30 bg-white/5 px-4 py-3.5 text-center transition-colors hover:bg-white/10"
       >
         <span className="text-2xl">{node.emoji ?? <Hammer size={20} />}</span>
         <span className="text-xs font-semibold text-text-primary">{node.label}</span>
@@ -60,11 +60,11 @@ export default function NodeCard({
       whileTap={{ scale: 0.96 }}
       className={cn(
         "toon-card relative flex min-w-[104px] flex-col items-center gap-1.5 rounded-2xl border-2 bg-surface px-4 py-3.5 text-center",
-        isStart ? "border-emerald-400" : "border-border-soft"
+        isStart ? "border-white" : "border-border-soft"
       )}
     >
       {isStart && (
-        <span className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-emerald-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-md">
+        <span className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-black shadow-md">
           <Rocket size={10} /> {t("roadmap.startHere")}
         </span>
       )}
