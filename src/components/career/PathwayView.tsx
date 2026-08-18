@@ -2,19 +2,23 @@
 
 import { useState } from "react";
 import { Career, PathwayNode } from "@/types";
-import { useCareerProgress, computeNodeStatuses, computeCareerCompletion } from "@/lib/progress";
+import { getFirstNodeId } from "@/lib/pathway";
+import { estimateMonths } from "@/lib/estimate";
+import { useLocale } from "@/i18n/LocaleContext";
+import { translateCareer } from "@/i18n/content/translate";
 import PathwaySectionRow from "./PathwaySectionRow";
-import ProgressSummary from "./ProgressSummary";
+import RoadmapIntro from "./RoadmapIntro";
 import ProjectGroupModal from "./ProjectGroupModal";
 import ItemDetailPanel from "@/components/shared/ItemDetailPanel";
 
-export default function PathwayView({ career }: { career: Career }) {
-  const { progress, cycleNodeState, resetProgress } = useCareerProgress(career.id);
+export default function PathwayView({ career: rawCareer }: { career: Career }) {
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [activeProjectNode, setActiveProjectNode] = useState<PathwayNode | null>(null);
+  const { locale } = useLocale();
 
-  const statuses = computeNodeStatuses(career.pathway, progress);
-  const { percent } = computeCareerCompletion(career.pathway, progress);
+  const career = translateCareer(rawCareer, locale);
+  const months = estimateMonths(rawCareer);
+  const firstNodeId = getFirstNodeId(career.pathway);
 
   const nodesById: Record<string, PathwayNode> = {};
   for (const section of career.pathway) {
@@ -31,20 +35,10 @@ export default function PathwayView({ career }: { career: Career }) {
     }
   }
 
-  const activeNodeForItem = activeItemId
-    ? Object.values(nodesById).find((n) => n.itemId === activeItemId)
-    : undefined;
-
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
       <div className="mb-10">
-        <ProgressSummary
-          careerName={career.name}
-          sections={career.pathway}
-          statuses={statuses}
-          percent={percent}
-          onReset={resetProgress}
-        />
+        <RoadmapIntro sections={career.pathway} estimatedMonths={months} />
       </div>
 
       <div className="space-y-2">
@@ -52,9 +46,9 @@ export default function PathwayView({ career }: { career: Career }) {
           <PathwaySectionRow
             key={section.id}
             section={section}
-            statuses={statuses}
             onNodeClick={handleNodeClick}
             isLast={i === career.pathway.length - 1}
+            firstNodeId={firstNodeId}
           />
         ))}
       </div>
@@ -64,14 +58,6 @@ export default function PathwayView({ career }: { career: Career }) {
         open={activeItemId !== null}
         onClose={() => setActiveItemId(null)}
         onNavigate={(id) => setActiveItemId(id)}
-        careerContext={
-          activeNodeForItem
-            ? {
-                status: statuses[activeNodeForItem.id] ?? "not-started",
-                onCycle: () => cycleNodeState(activeNodeForItem.id),
-              }
-            : undefined
-        }
       />
 
       <ProjectGroupModal node={activeProjectNode} onClose={() => setActiveProjectNode(null)} />

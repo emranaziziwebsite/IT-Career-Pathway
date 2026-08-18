@@ -4,71 +4,57 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
   X,
-  CheckCircle2,
-  Circle,
-  Flame,
   ArrowRight,
   Trophy,
   Gift,
   Briefcase,
   BadgeCheck,
   Hammer,
-  Compass,
 } from "lucide-react";
 import { getItem } from "@/data/items";
 import { careersUsingItem } from "@/lib/search";
-import { ProgressState, ResourceType } from "@/types";
+import { ResourceType } from "@/types";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/i18n/LocaleContext";
+import { translateItem, translateItemCategory, translateCareer } from "@/i18n/content/translate";
+import { TranslationKey } from "@/i18n/dictionary";
 
-const resourceMeta: Record<ResourceType, { label: string; icon: React.ReactNode; color: string }> = {
-  best: { label: "Best Course", icon: <Trophy size={14} />, color: "text-amber-300 bg-amber-500/10" },
-  free: { label: "Best Free Option", icon: <Gift size={14} />, color: "text-emerald-300 bg-emerald-500/10" },
-  "job-focused": { label: "Job-Focused Pick", icon: <Briefcase size={14} />, color: "text-cyan-300 bg-cyan-500/10" },
-  certification: { label: "Certification", icon: <BadgeCheck size={14} />, color: "text-violet-300 bg-violet-500/10" },
+const resourceMeta: Record<ResourceType, { key: TranslationKey; icon: React.ReactNode; color: string }> = {
+  best: { key: "item.resourceBest", icon: <Trophy size={14} />, color: "text-amber-600 bg-amber-500/10" },
+  free: { key: "item.resourceFree", icon: <Gift size={14} />, color: "text-emerald-600 bg-emerald-500/10" },
+  "job-focused": { key: "item.resourceJob", icon: <Briefcase size={14} />, color: "text-cyan-600 bg-cyan-500/10" },
+  certification: { key: "item.resourceCert", icon: <BadgeCheck size={14} />, color: "text-violet-600 bg-violet-500/10" },
 };
-
-const progressMeta: Record<ProgressState, { label: string; icon: React.ReactNode; color: string }> = {
-  "not-started": { label: "Not Started", icon: <Circle size={14} />, color: "text-text-muted" },
-  learning: { label: "Learning", icon: <Flame size={14} />, color: "text-amber-300" },
-  completed: { label: "Completed", icon: <CheckCircle2 size={14} />, color: "text-emerald-300" },
-  current: { label: "Current", icon: <Compass size={14} />, color: "text-cyan-300" },
-  locked: { label: "Locked", icon: <Circle size={14} />, color: "text-text-muted" },
-};
-
-export interface CareerContext {
-  status: ProgressState;
-  onCycle: () => void;
-}
 
 export default function ItemDetailPanel({
   itemId,
   open,
   onClose,
   onNavigate,
-  careerContext,
 }: {
   itemId: string | null;
   open: boolean;
   onClose: () => void;
   onNavigate: (itemId: string) => void;
-  careerContext?: CareerContext;
 }) {
-  const item = itemId ? getItem(itemId) : undefined;
+  const { t, locale } = useLocale();
+  const rawItem = itemId ? getItem(itemId) : undefined;
+  const item = rawItem ? translateItem(rawItem, locale) : undefined;
   const relatedCareers = itemId ? careersUsingItem(itemId) : [];
 
   return (
     <AnimatePresence>
-      {open && item && (
+      {open && item && rawItem && (
         <>
           <motion.div
-            className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-[90] bg-slate-900/50 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
           <motion.aside
-            className="glass fixed right-0 top-0 z-[95] h-full w-full max-w-md overflow-y-auto shadow-2xl shadow-black/60 sm:max-w-lg"
+            className="glass fixed end-0 top-0 z-[95] h-full w-full max-w-md overflow-y-auto shadow-2xl shadow-slate-900/20 sm:max-w-lg"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -76,19 +62,19 @@ export default function ItemDetailPanel({
           >
             <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-border-soft bg-surface/90 px-6 py-5 backdrop-blur-md">
               <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-2xl">
-                  {item.emoji}
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-black/5 text-2xl">
+                  {rawItem.emoji}
                 </span>
                 <div>
                   <h2 className="font-display text-lg font-bold text-text-primary">{item.name}</h2>
                   <p className="text-xs uppercase tracking-wide text-text-muted">
-                    {item.category} · {item.difficulty}
+                    {translateItemCategory(rawItem.category, locale)} · {t(`level.${rawItem.difficulty}` as TranslationKey)}
                   </p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="rounded-full p-1.5 text-text-muted hover:bg-white/10 hover:text-text-primary"
+                className="rounded-full p-1.5 text-text-muted hover:bg-black/5 hover:text-text-primary"
               >
                 <X size={18} />
               </button>
@@ -97,24 +83,8 @@ export default function ItemDetailPanel({
             <div className="space-y-6 px-6 py-6">
               <p className="text-sm leading-relaxed text-text-secondary">{item.description}</p>
 
-              {careerContext && (
-                <button
-                  onClick={careerContext.onCycle}
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-xl border border-border-soft bg-white/5 px-4 py-3 text-sm font-medium transition-colors hover:bg-white/10",
-                    progressMeta[careerContext.status].color
-                  )}
-                >
-                  <span className="flex items-center gap-2">
-                    {progressMeta[careerContext.status].icon}
-                    {progressMeta[careerContext.status].label}
-                  </span>
-                  <span className="text-xs text-text-muted">tap to update</span>
-                </button>
-              )}
-
               <div>
-                <SectionLabel>Used For</SectionLabel>
+                <SectionLabel>{t("item.usedFor")}</SectionLabel>
                 <div className="flex flex-wrap gap-2">
                   {item.usedFor.map((u) => (
                     <Chip key={u}>{u}</Chip>
@@ -123,7 +93,7 @@ export default function ItemDetailPanel({
               </div>
 
               <div>
-                <SectionLabel>What You&apos;ll Learn</SectionLabel>
+                <SectionLabel>{t("item.whatYoullLearn")}</SectionLabel>
                 <ul className="space-y-1.5">
                   {item.learn.map((l) => (
                     <li key={l} className="flex items-start gap-2 text-sm text-text-secondary">
@@ -134,15 +104,16 @@ export default function ItemDetailPanel({
                 </ul>
               </div>
 
-              {item.prerequisites.length > 0 && (
+              {rawItem.prerequisites.length > 0 && (
                 <div>
-                  <SectionLabel>Prerequisites</SectionLabel>
+                  <SectionLabel>{t("item.prerequisites")}</SectionLabel>
                   <div className="flex flex-wrap gap-2">
-                    {item.prerequisites.map((p) => {
+                    {rawItem.prerequisites.map((p) => {
                       const pi = getItem(p);
+                      const piT = pi ? translateItem(pi, locale) : undefined;
                       return (
                         <button key={p} onClick={() => onNavigate(p)}>
-                          <Chip interactive>{pi ? `${pi.emoji} ${pi.name}` : p}</Chip>
+                          <Chip interactive>{piT ? `${piT.emoji} ${piT.name}` : p}</Chip>
                         </button>
                       );
                     })}
@@ -150,17 +121,18 @@ export default function ItemDetailPanel({
                 </div>
               )}
 
-              {item.nextSteps.length > 0 && (
+              {rawItem.nextSteps.length > 0 && (
                 <div>
-                  <SectionLabel>What Comes Next</SectionLabel>
+                  <SectionLabel>{t("item.whatComesNext")}</SectionLabel>
                   <div className="flex flex-wrap gap-2">
-                    {item.nextSteps.map((n) => {
+                    {rawItem.nextSteps.map((n) => {
                       const ni = getItem(n);
+                      const niT = ni ? translateItem(ni, locale) : undefined;
                       return (
                         <button key={n} onClick={() => onNavigate(n)}>
                           <Chip interactive>
                             <span className="flex items-center gap-1">
-                              {ni ? `${ni.emoji} ${ni.name}` : n} <ArrowRight size={11} />
+                              {niT ? `${niT.emoji} ${niT.name}` : n} <ArrowRight size={11} />
                             </span>
                           </Chip>
                         </button>
@@ -171,13 +143,11 @@ export default function ItemDetailPanel({
               )}
 
               <div>
-                <SectionLabel>Recommended Resources</SectionLabel>
-                <p className="mb-2 text-xs text-text-muted">
-                  Starting points, not absolutes — the right pick depends on your budget and background.
-                </p>
+                <SectionLabel>{t("item.recommendedResources")}</SectionLabel>
+                <p className="mb-2 text-xs text-text-muted">{t("item.resourcesNote")}</p>
                 <div className="space-y-2">
-                  {item.resources.map((r, i) => (
-                    <div key={i} className="rounded-xl border border-border-soft bg-white/[0.03] p-3">
+                  {rawItem.resources.map((r, i) => (
+                    <div key={i} className="rounded-xl border border-border-soft bg-black/[0.02] p-3">
                       <div className="flex items-center justify-between">
                         <span
                           className={cn(
@@ -186,10 +156,10 @@ export default function ItemDetailPanel({
                           )}
                         >
                           {resourceMeta[r.type].icon}
-                          {resourceMeta[r.type].label}
+                          {t(resourceMeta[r.type].key)}
                         </span>
                         <span className="text-[11px] text-text-muted">
-                          {r.cost === "free" ? "🆓 Free" : "💰 Paid"} · {r.level}
+                          {r.cost === "free" ? t("item.free") : t("item.paid")} · {t(`level.${r.level}` as TranslationKey)}
                         </span>
                       </div>
                       <p className="mt-2 text-sm font-medium text-text-primary">{r.title}</p>
@@ -200,7 +170,7 @@ export default function ItemDetailPanel({
               </div>
 
               <div>
-                <SectionLabel>Practice Projects</SectionLabel>
+                <SectionLabel>{t("item.practiceProjects")}</SectionLabel>
                 <ul className="space-y-1.5">
                   {item.projects.map((p) => (
                     <li key={p} className="flex items-start gap-2 text-sm text-text-secondary">
@@ -213,15 +183,18 @@ export default function ItemDetailPanel({
 
               {relatedCareers.length > 0 && (
                 <div>
-                  <SectionLabel>Careers Using This</SectionLabel>
+                  <SectionLabel>{t("item.careersUsingThis")}</SectionLabel>
                   <div className="flex flex-wrap gap-2">
-                    {relatedCareers.map((c) => (
-                      <Link key={c.id} href={`/careers/${c.slug}`}>
-                        <Chip interactive>
-                          {c.emoji} {c.name}
-                        </Chip>
-                      </Link>
-                    ))}
+                    {relatedCareers.map((c) => {
+                      const cT = translateCareer(c, locale);
+                      return (
+                        <Link key={c.id} href={`/careers/${c.slug}`}>
+                          <Chip interactive>
+                            {c.emoji} {cT.name}
+                          </Chip>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -243,8 +216,8 @@ function Chip({ children, interactive }: { children: React.ReactNode; interactiv
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-border-soft bg-white/5 px-3 py-1 text-xs font-medium text-text-secondary",
-        interactive && "cursor-pointer transition-colors hover:border-border-strong hover:bg-white/10 hover:text-text-primary"
+        "inline-flex items-center rounded-full border border-border-soft bg-black/[0.03] px-3 py-1 text-xs font-medium text-text-secondary",
+        interactive && "cursor-pointer transition-colors hover:border-border-strong hover:bg-black/5 hover:text-text-primary"
       )}
     >
       {children}

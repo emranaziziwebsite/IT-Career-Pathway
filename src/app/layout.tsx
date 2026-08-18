@@ -1,30 +1,57 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Fredoka, Nunito, Vazirmatn } from "next/font/google";
 import AppShell from "@/components/shared/AppShell";
+import { LocaleProvider } from "@/i18n/LocaleContext";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const nunito = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+});
+
+const vazirmatn = Vazirmatn({
+  variable: "--font-vazirmatn",
+  subsets: ["arabic", "latin"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: "IT Career Pathway Explorer",
   description:
-    "Choose an IT career and see exactly what to learn — languages, frameworks, tools, certifications, and projects — as an interactive skill-tree pathway.",
+    "Choose an IT career and see a clear roadmap of everything to learn — languages, frameworks, tools, certifications, and projects.",
 };
+
+const setInitialLocaleScript = `
+(function () {
+  try {
+    var locale = window.localStorage.getItem("itcpe:locale");
+    if (locale === "fa") {
+      document.documentElement.lang = "fa";
+      document.documentElement.dir = "rtl";
+    } else if (locale === "de") {
+      document.documentElement.lang = "de";
+    }
+  } catch (e) {}
+})();
+`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${fredoka.variable} ${nunito.variable} ${vazirmatn.variable} h-full antialiased`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: setInitialLocaleScript }} />
+      </head>
       <body className="min-h-full">
-        <AppShell>{children}</AppShell>
+        <LocaleProvider>
+          <AppShell>{children}</AppShell>
+        </LocaleProvider>
       </body>
     </html>
   );

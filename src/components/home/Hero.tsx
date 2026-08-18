@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { Compass, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
+import { useLocale } from "@/i18n/LocaleContext";
 
 const floatingEmojis = [
   { emoji: "💻", top: "12%", left: "8%", delay: 0 },
@@ -14,16 +14,17 @@ const floatingEmojis = [
 ];
 
 export default function Hero() {
+  const { t } = useLocale();
   return (
     <section className="relative overflow-hidden px-4 pb-20 pt-24 sm:px-6 sm:pt-32">
       <div className="pointer-events-none absolute inset-0 hidden sm:block">
         {floatingEmojis.map((f, i) => (
           <motion.span
             key={i}
-            className="absolute select-none text-3xl opacity-40 animate-float-slow"
+            className="absolute select-none text-3xl opacity-70 animate-bob"
             style={{ top: f.top, left: f.left, animationDelay: `${f.delay}s` }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
+            animate={{ opacity: 0.7 }}
             transition={{ delay: f.delay, duration: 1 }}
           >
             {f.emoji}
@@ -35,21 +36,19 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-border-soft bg-white/5 px-4 py-1.5 text-xs font-medium text-text-secondary"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-border-soft bg-surface px-4 py-1.5 text-xs font-medium text-text-secondary shadow-sm"
         >
-          <Sparkles size={13} className="text-cyan-400" />
-          20 careers · 100+ skills mapped · always free to explore
+          <Sparkles size={13} className="text-cyan-500" />
+          {t("hero.badge")}
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl"
+          className="text-gradient font-display text-4xl font-bold leading-tight tracking-tight sm:text-6xl"
         >
-          Where do you want to go
-          <br />
-          in <span className="text-gradient">IT?</span> 🚀
+          {t("hero.title")}
         </motion.h1>
 
         <motion.p
@@ -58,8 +57,7 @@ export default function Hero() {
           transition={{ delay: 0.2 }}
           className="mx-auto mt-5 max-w-xl text-base text-text-secondary sm:text-lg"
         >
-          Pick a career below and get an interactive, game-like pathway of exactly what to learn —
-          languages, frameworks, tools, certifications, and projects — from zero to job-ready.
+          {t("hero.subtitle")}
         </motion.p>
 
         <motion.div
@@ -72,15 +70,8 @@ export default function Hero() {
             href="#careers"
             className="rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-500/30 transition-transform hover:scale-105"
           >
-            Explore Careers ↓
+            {t("hero.cta")}
           </a>
-          <Link
-            href="/finder"
-            className="flex items-center gap-2 rounded-full border border-border-soft bg-surface px-6 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-border-strong hover:bg-white/5"
-          >
-            <Compass size={16} />
-            Not sure? Take the Career Finder
-          </Link>
         </motion.div>
       </div>
     </section>

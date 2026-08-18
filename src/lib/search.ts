@@ -1,6 +1,8 @@
 import { allCareers } from "@/data/careers";
 import { allItems } from "@/data/items";
 import { Career, LearningItem } from "@/types";
+import { Locale } from "@/i18n/locales";
+import { translateCareer, translateCategory, translateItemCategory, translateItem } from "@/i18n/content/translate";
 
 export interface SearchEntry {
   id: string;
@@ -9,34 +11,45 @@ export interface SearchEntry {
   subtitle: string;
   emoji: string;
   href: string;
+  matchText: string;
 }
-
-const careerEntries: SearchEntry[] = allCareers.map((c) => ({
-  id: c.id,
-  type: "career",
-  title: c.name,
-  subtitle: c.category,
-  emoji: c.emoji,
-  href: `/careers/${c.slug}`,
-}));
-
-const itemEntries: SearchEntry[] = allItems.map((i) => ({
-  id: i.id,
-  type: "item",
-  title: i.name,
-  subtitle: capitalize(i.category),
-  emoji: i.emoji,
-  href: `/technologies?item=${i.id}`,
-}));
-
-const index: SearchEntry[] = [...careerEntries, ...itemEntries];
 
 function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+function buildIndex(locale: Locale): SearchEntry[] {
+  const careerEntries: SearchEntry[] = allCareers.map((c) => {
+    const t = translateCareer(c, locale);
+    return {
+      id: c.id,
+      type: "career",
+      title: t.name,
+      subtitle: translateCategory(c.category, locale),
+      emoji: c.emoji,
+      href: `/careers/${c.slug}`,
+      matchText: `${t.name} ${c.name}`.toLowerCase(),
+    };
+  });
+
+  const itemEntries: SearchEntry[] = allItems.map((i) => {
+    const it = translateItem(i, locale);
+    return {
+      id: i.id,
+      type: "item",
+      title: it.name,
+      subtitle: capitalize(translateItemCategory(i.category, locale)),
+      emoji: i.emoji,
+      href: `/technologies?item=${i.id}`,
+      matchText: `${it.name} ${i.name}`.toLowerCase(),
+    };
+  });
+
+  return [...careerEntries, ...itemEntries];
+}
+
 function scoreEntry(entry: SearchEntry, q: string): number {
-  const t = entry.title.toLowerCase();
+  const t = entry.matchText;
   if (t === q) return 100;
   if (t.startsWith(q)) return 80;
   if (t.includes(q)) return 55;
@@ -44,9 +57,10 @@ function scoreEntry(entry: SearchEntry, q: string): number {
   return 0;
 }
 
-export function searchAll(query: string, limit = 8): SearchEntry[] {
+export function searchAll(query: string, locale: Locale, limit = 8): SearchEntry[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
+  const index = buildIndex(locale);
   return index
     .map((entry) => ({ entry, score: scoreEntry(entry, q) }))
     .filter((r) => r.score > 0)

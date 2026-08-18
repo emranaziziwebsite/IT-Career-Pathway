@@ -2,29 +2,37 @@
 
 import { useMemo } from "react";
 
-interface Star {
+interface Blob {
   x: number;
   y: number;
   size: number;
   delay: number;
   duration: number;
+  color: string;
 }
 
-export default function StarField({ count = 70 }: { count?: number }) {
-  const stars = useMemo<Star[]>(() => {
+const colors = [
+  "rgba(34,211,238,0.18)",
+  "rgba(167,139,250,0.18)",
+  "rgba(244,114,182,0.16)",
+  "rgba(251,191,36,0.16)",
+  "rgba(52,211,153,0.16)",
+];
+
+export default function StarField({ count = 8 }: { count?: number }) {
+  const blobs = useMemo<Blob[]>(() => {
     return Array.from({ length: count }, (_, i) => {
-      // deterministic pseudo-random so SSR/CSR markup matches
       const seed = i * 9301 + 49297;
-      const r1 = ((seed * 233280) % 233280) / 233280;
-      const r2 = ((seed * 9301) % 233280) / 233280;
-      const r3 = ((seed * 49297) % 233280) / 233280;
-      const r4 = ((seed * 1103515245) % 233280) / 233280;
+      const r1 = Math.abs(((seed * 233280) % 233280) / 233280);
+      const r2 = Math.abs(((seed * 9301) % 233280) / 233280);
+      const r3 = Math.abs(((seed * 49297) % 233280) / 233280);
       return {
-        x: Math.abs(r1) * 100,
-        y: Math.abs(r2) * 100,
-        size: Math.abs(r3) * 2 + 0.5,
-        delay: Math.abs(r4) * 4,
-        duration: 2.5 + Math.abs(r1) * 3,
+        x: r1 * 100,
+        y: r2 * 90,
+        size: 220 + r3 * 260,
+        delay: r1 * 4,
+        duration: 8 + r2 * 6,
+        color: colors[i % colors.length],
       };
     });
   }, [count]);
@@ -32,17 +40,19 @@ export default function StarField({ count = 70 }: { count?: number }) {
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden">
       <div className="absolute inset-0 bg-radial-fade" />
-      <div className="absolute inset-0 bg-grid opacity-40 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_30%,transparent_75%)]" />
-      {stars.map((s, i) => (
+      <div className="absolute inset-0 bg-grid opacity-60 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_30%,transparent_75%)]" />
+      {blobs.map((b, i) => (
         <span
           key={i}
-          className="absolute rounded-full bg-white"
+          className="absolute rounded-full blur-3xl animate-float-slow"
           style={{
-            left: `${s.x}%`,
-            top: `${s.y}%`,
-            width: s.size,
-            height: s.size,
-            animation: `twinkle ${s.duration}s ease-in-out ${s.delay}s infinite`,
+            left: `${b.x}%`,
+            top: `${b.y}%`,
+            width: b.size,
+            height: b.size,
+            background: b.color,
+            animationDelay: `${b.delay}s`,
+            animationDuration: `${b.duration}s`,
           }}
         />
       ))}

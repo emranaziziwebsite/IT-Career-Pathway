@@ -35,7 +35,7 @@ export default function ProjectGroupModal({
           >
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 rounded-full p-1.5 text-text-muted hover:bg-white/10 hover:text-text-primary"
+              className="absolute end-4 top-4 rounded-full p-1.5 text-text-muted hover:bg-black/5 hover:text-text-primary"
             >
               <X size={16} />
             </button>

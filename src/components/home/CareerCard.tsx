@@ -2,12 +2,19 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Clock } from "lucide-react";
 import { Career } from "@/types";
+import { estimateMonths } from "@/lib/estimate";
+import { useLocale } from "@/i18n/LocaleContext";
+import { translateCareer, translateCategory } from "@/i18n/content/translate";
 
 const difficultyDots = 5;
 
-export default function CareerCard({ career, index }: { career: Career; index: number }) {
+export default function CareerCard({ career: rawCareer, index }: { career: Career; index: number }) {
+  const { t, locale } = useLocale();
+  const months = estimateMonths(rawCareer);
+  const career = translateCareer(rawCareer, locale);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -15,17 +22,17 @@ export default function CareerCard({ career, index }: { career: Career; index: n
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.45, delay: (index % 12) * 0.04 }}
     >
-      <Link href={`/careers/${career.slug}`} className="group block h-full">
-        <div className="relative h-full overflow-hidden rounded-2xl border border-border-soft bg-surface p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-border-strong hover:shadow-2xl hover:shadow-violet-500/10">
+      <Link href={`/careers/${rawCareer.slug}`} className="group block h-full">
+        <div className="toon-card relative h-full overflow-hidden rounded-3xl border-2 border-border-soft bg-surface p-5 transition-transform duration-300 hover:-translate-y-1.5 hover:-rotate-1 hover:border-border-strong">
           <div
-            className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${career.color} opacity-20 blur-2xl transition-opacity duration-300 group-hover:opacity-40`}
+            className={`absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${rawCareer.color} opacity-25 blur-2xl transition-opacity duration-300 group-hover:opacity-45`}
           />
           <div className="relative z-10 flex h-full flex-col">
             <div className="mb-4 flex items-start justify-between">
               <span
-                className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${career.color} text-2xl shadow-lg`}
+                className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${rawCareer.color} text-2xl shadow-lg`}
               >
-                {career.emoji}
+                {rawCareer.emoji}
               </span>
               <ArrowUpRight
                 size={18}
@@ -35,7 +42,7 @@ export default function CareerCard({ career, index }: { career: Career; index: n
 
             <h3 className="font-display text-lg font-bold text-text-primary">{career.name}</h3>
             <p className="mt-1 text-xs font-medium uppercase tracking-wide text-text-muted">
-              {career.category}
+              {translateCategory(rawCareer.category, locale)}
             </p>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-text-secondary">{career.tagline}</p>
 
@@ -45,14 +52,14 @@ export default function CareerCard({ career, index }: { career: Career; index: n
                   <span
                     key={i}
                     className={`h-1.5 w-1.5 rounded-full ${
-                      i < career.stats.difficulty ? "bg-gradient-to-br " + career.color : "bg-white/10"
+                      i < rawCareer.stats.difficulty ? "bg-gradient-to-br " + rawCareer.color : "bg-black/10"
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-[11px] text-text-muted">
-                {career.pathway.reduce((n, s) => n + s.nodes.filter((no) => no.kind === "skill" || no.kind === "certification").length, 0)}{" "}
-                skills
+              <span className="flex items-center gap-1 text-[11px] text-text-muted">
+                <Clock size={11} />
+                ~{months} {t("home.monthsAt10h")}
               </span>
             </div>
           </div>

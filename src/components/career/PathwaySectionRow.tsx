@@ -1,19 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { PathwaySection, ProgressState } from "@/types";
+import { PathwaySection } from "@/types";
 import NodeCard from "./NodeCard";
 
 export default function PathwaySectionRow({
   section,
-  statuses,
   onNodeClick,
   isLast,
+  firstNodeId,
 }: {
   section: PathwaySection;
-  statuses: Record<string, ProgressState>;
   onNodeClick: (nodeId: string) => void;
   isLast: boolean;
+  firstNodeId?: string;
 }) {
   return (
     <div className="relative">
@@ -46,8 +46,8 @@ export default function PathwaySectionRow({
           <NodeCard
             key={node.id}
             node={node}
-            status={statuses[node.id] ?? "not-started"}
             onClick={() => onNodeClick(node.id)}
+            isStart={node.id === firstNodeId}
           />
         ))}
       </motion.div>

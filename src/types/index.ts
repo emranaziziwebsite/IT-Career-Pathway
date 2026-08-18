@@ -94,34 +94,3 @@ export interface Career {
   stats: CareerStats;
 }
 
-export type QuizDimension =
-  | "programming"
-  | "creativity"
-  | "mathematics"
-  | "hardware"
-  | "security"
-  | "data"
-  | "games"
-  | "ai"
-  | "people"
-  | "problemSolving";
-
-export interface QuizOption {
-  id: string;
-  label: string;
-  emoji: string;
-  weights: Partial<Record<QuizDimension, number>>;
-}
-
-export interface QuizQuestion {
-  id: string;
-  question: string;
-  options: QuizOption[];
-}
-
-export interface CareerMatch {
-  career: Career;
-  score: number; // 0-100
-}
-
-export type ProgressState = "not-started" | "learning" | "completed" | "current" | "locked";

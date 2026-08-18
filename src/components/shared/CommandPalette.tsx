@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, Sparkles } from "lucide-react";
 import { searchAll } from "@/lib/search";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/i18n/LocaleContext";
 
 export default function CommandPalette({
   open,
@@ -19,8 +20,9 @@ export default function CommandPalette({
   const [wasOpen, setWasOpen] = useState(open);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { t, locale } = useLocale();
 
-  const results = useMemo(() => searchAll(query, 10), [query]);
+  const results = useMemo(() => searchAll(query, locale, 10), [query, locale]);
 
   // Reset the palette's state when it transitions to open, without an effect
   // (see https://react.dev/learn/you-might-not-need-an-effect#adjusting-state-based-on-a-prop-change).
@@ -74,14 +76,14 @@ export default function CommandPalette({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
           <motion.div
-            className="glass relative w-full max-w-xl overflow-hidden rounded-2xl shadow-2xl shadow-black/50"
+            className="glass relative w-full max-w-xl overflow-hidden rounded-2xl shadow-2xl shadow-slate-900/20"
             initial={{ opacity: 0, y: -16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -16, scale: 0.98 }}
@@ -94,12 +96,12 @@ export default function CommandPalette({
                 value={query}
                 onChange={(e) => handleQueryChange(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search careers, languages, tools, certifications…"
+                placeholder={t("search.placeholder")}
                 className="flex-1 bg-transparent text-sm text-text-primary placeholder:text-text-muted outline-none"
               />
               <button
                 onClick={onClose}
-                className="rounded-md p-1 text-text-muted hover:bg-white/10 hover:text-text-primary"
+                className="rounded-md p-1 text-text-muted hover:bg-black/5 hover:text-text-primary"
               >
                 <X size={16} />
               </button>
@@ -109,14 +111,12 @@ export default function CommandPalette({
               {query.trim() === "" && (
                 <div className="flex flex-col items-center gap-2 px-6 py-10 text-center text-text-muted">
                   <Sparkles size={22} className="text-accent-cyan" />
-                  <p className="text-sm">
-                    Try &ldquo;Python&rdquo;, &ldquo;React&rdquo;, or &ldquo;Cybersecurity&rdquo;
-                  </p>
+                  <p className="text-sm">{t("search.hint")}</p>
                 </div>
               )}
               {query.trim() !== "" && results.length === 0 && (
                 <p className="px-4 py-8 text-center text-sm text-text-muted">
-                  Nothing found for &ldquo;{query}&rdquo;
+                  {t("search.empty")} &ldquo;{query}&rdquo;
                 </p>
               )}
               {results.map((r, i) => (
@@ -126,7 +126,7 @@ export default function CommandPalette({
                   onMouseEnter={() => setActiveIndex(i)}
                   className={cn(
                     "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors",
-                    i === activeIndex ? "bg-white/10" : "hover:bg-white/5"
+                    i === activeIndex ? "bg-black/5" : "hover:bg-black/[0.03]"
                   )}
                 >
                   <span className="text-xl">{r.emoji}</span>
@@ -137,10 +137,10 @@ export default function CommandPalette({
                   <span
                     className={cn(
                       "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
-                      r.type === "career" ? "bg-cyan-500/15 text-cyan-300" : "bg-violet-500/15 text-violet-300"
+                      r.type === "career" ? "bg-cyan-500/15 text-cyan-700" : "bg-violet-500/15 text-violet-700"
                     )}
                   >
-                    {r.type === "career" ? "Career" : "Tech"}
+                    {r.type === "career" ? t("search.tagCareer") : t("search.tagTech")}
                   </span>
                 </button>
               ))}
