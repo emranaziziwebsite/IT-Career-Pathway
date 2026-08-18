@@ -41,7 +41,7 @@ export default function TechnologiesView({ initialItemId }: { initialItemId?: st
               className={cn(
                 "shrink-0 rounded-full border-2 px-3.5 py-1.5 text-xs font-semibold transition-colors",
                 category === cat
-                  ? "border-transparent bg-white text-black"
+                  ? "border-transparent bg-blue-500 text-white"
                   : "border-border-soft bg-surface text-text-secondary hover:border-border-strong hover:text-text-primary"
               )}
             >

@@ -25,8 +25,8 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
     <header className="sticky top-0 z-50 border-b border-border-soft bg-void/80 backdrop-blur-lg">
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
         <Link href="/" className="flex items-center gap-2 font-display text-lg font-bold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-zinc-100 via-white to-zinc-400 text-base shadow-lg shadow-white/10">
-            <Rocket size={16} className="text-black" />
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500 text-base shadow-lg shadow-blue-500/30">
+            <Rocket size={16} className="text-white" />
           </span>
           <span className="hidden text-gradient sm:inline">{t("nav.brand")}</span>
         </Link>
@@ -41,7 +41,7 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
                 className={cn(
                   "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
                   active
-                    ? "bg-white/12 text-text-primary"
+                    ? "bg-blue-500/15 text-blue-300"
                     : "text-text-secondary hover:bg-white/8 hover:text-text-primary"
                 )}
               >
@@ -114,7 +114,7 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
               className={cn(
                 "rounded-lg px-3 py-2 text-sm font-medium",
                 pathname === link.href
-                  ? "bg-white/12 text-text-primary"
+                  ? "bg-blue-500/15 text-blue-300"
                   : "text-text-secondary hover:bg-white/8"
               )}
             >

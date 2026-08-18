@@ -48,7 +48,7 @@ export default function CompareView({ initialIds }: { initialIds: string[] }) {
               className={cn(
                 "rounded-full border-2 px-3 py-1.5 text-xs font-semibold transition-colors",
                 active
-                  ? "border-transparent bg-white text-black"
+                  ? "border-transparent bg-blue-500 text-white"
                   : disabled
                   ? "cursor-not-allowed border-border-soft text-text-muted opacity-40"
                   : "border-border-soft bg-surface text-text-secondary hover:border-border-strong hover:text-text-primary"

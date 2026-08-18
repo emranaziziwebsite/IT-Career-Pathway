@@ -60,11 +60,11 @@ export default function NodeCard({
       whileTap={{ scale: 0.96 }}
       className={cn(
         "toon-card relative flex min-w-[104px] flex-col items-center gap-1.5 rounded-2xl border-2 bg-surface px-4 py-3.5 text-center",
-        isStart ? "border-white" : "border-border-soft"
+        isStart ? "border-blue-400" : "border-border-soft"
       )}
     >
       {isStart && (
-        <span className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-white px-2.5 py-1 text-[10px] font-bold text-black shadow-md">
+        <span className="absolute -top-3 left-1/2 flex -translate-x-1/2 items-center gap-1 whitespace-nowrap rounded-full bg-blue-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-md">
           <Rocket size={10} /> {t("roadmap.startHere")}
         </span>
       )}

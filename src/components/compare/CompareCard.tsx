@@ -115,7 +115,7 @@ export default function CompareCard({ career: rawCareer, onRemove }: { career: C
 
       <Link
         href={`/careers/${rawCareer.slug}`}
-        className="mt-4 block rounded-full bg-white px-4 py-2 text-center text-xs font-semibold text-black hover:opacity-90"
+        className="mt-4 block rounded-full bg-blue-500 px-4 py-2 text-center text-xs font-semibold text-white hover:opacity-90"
       >
         {t("compare.viewFullPathway")}
       </Link>

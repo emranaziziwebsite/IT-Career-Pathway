@@ -68,7 +68,7 @@ export default function Hero() {
         >
           <a
             href="#careers"
-            className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-white/20 transition-transform hover:scale-105"
+            className="rounded-full bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-transform hover:scale-105"
           >
             {t("hero.cta")}
           </a>
