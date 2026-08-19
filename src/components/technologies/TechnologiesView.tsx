@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { allItems } from "@/data/items";
 import ItemDetailPanel from "@/components/shared/ItemDetailPanel";
@@ -8,7 +9,9 @@ import { cn } from "@/lib/utils";
 import { useLocale } from "@/i18n/LocaleContext";
 import { translateItemCategory, translateItem } from "@/i18n/content/translate";
 
-export default function TechnologiesView({ initialItemId }: { initialItemId?: string }) {
+export default function TechnologiesView() {
+  const searchParams = useSearchParams();
+  const initialItemId = searchParams.get("item") ?? undefined;
   const [category, setCategory] = useState<string>("All");
   const [query, setQuery] = useState("");
   const [activeItemId, setActiveItemId] = useState<string | null>(initialItemId ?? null);

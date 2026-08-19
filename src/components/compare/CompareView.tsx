@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Scale } from "lucide-react";
 import { allCareers, careersById } from "@/data/careers";
@@ -10,8 +11,11 @@ import { useLocale } from "@/i18n/LocaleContext";
 import { translateCareer } from "@/i18n/content/translate";
 
 const MAX_SELECTED = 3;
+const DEFAULT_IDS = ["frontend-developer", "backend-developer"];
 
-export default function CompareView({ initialIds }: { initialIds: string[] }) {
+export default function CompareView() {
+  const searchParams = useSearchParams();
+  const initialIds = searchParams.get("careers")?.split(",").filter(Boolean) ?? DEFAULT_IDS;
   const valid = initialIds.filter((id) => careersById[id]);
   const [selected, setSelected] = useState<string[]>(valid.slice(0, MAX_SELECTED));
   const { t, locale } = useLocale();
