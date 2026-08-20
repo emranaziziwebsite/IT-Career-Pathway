@@ -22,7 +22,7 @@ const vazirmatn = Vazirmatn({
   weight: ["400", "600", "700"],
 });
 
-const siteUrl = "https://emranaziziwebsite.github.io/IT-Road-Map/";
+const siteUrl = "https://emranaziziwebsite.github.io/IT-Career-Pathway/";
 const title = "IT Career Pathway Explorer";
 const description =
   "Choose an IT career and see a clear roadmap of everything to learn — languages, frameworks, tools, certifications, and projects.";

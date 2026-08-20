@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
-// GitHub Pages serves this project at /IT-Road-Map/ (not the domain root),
+// GitHub Pages serves this project at /IT-Career-Pathway/ (not the domain root),
 // so every internal link/asset path needs that prefix baked in.
-const repoBasePath = "/IT-Road-Map";
+const repoBasePath = "/IT-Career-Pathway";
 
 const nextConfig: NextConfig = {
   output: "export",
