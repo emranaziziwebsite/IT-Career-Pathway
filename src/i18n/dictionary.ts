@@ -18,6 +18,8 @@ const en = {
 
   // Footer
   "footer.tagline": "Recommendations are starting points, not absolutes — pick what fits your goals and budget.",
+  "footer.explore": "Explore",
+  "footer.rights": "All roadmaps, always free.",
 
   // Hero
   "hero.badge": "20 careers · 100+ skills mapped · always free to explore",
@@ -160,6 +162,8 @@ const de: Record<TranslationKey, string> = {
   "search.tagTech": "Technik",
 
   "footer.tagline": "Empfehlungen sind Ausgangspunkte, keine Absolutheiten — wähle, was zu deinen Zielen und deinem Budget passt.",
+  "footer.explore": "Entdecken",
+  "footer.rights": "Alle Roadmaps, immer kostenlos.",
 
   "hero.badge": "20 Berufe · 100+ Fähigkeiten erfasst · immer kostenlos",
   "hero.title": "Wohin möchtest du in der IT? 🚀",
@@ -288,6 +292,8 @@ const fa: Record<TranslationKey, string> = {
   "search.tagTech": "تخنالوژی",
 
   "footer.tagline": "پیشنهادات نقطهٔ شروع اند، نه قانون مطلق — آنچه با هدف و بودجهٔ شما سازگار است انتخاب کنید.",
+  "footer.explore": "کاوش",
+  "footer.rights": "همهٔ نقشهٔ راه‌ها، همیشه رایگان.",
 
   "hero.badge": "۲۰ حرفه · بیش از ۱۰۰ مهارت نقشه‌برداری شده · همیشه رایگان",
   "hero.title": "می‌خواهید در کدام بخش IT کار کنید؟ 🚀",

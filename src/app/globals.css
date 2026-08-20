@@ -38,6 +38,7 @@
 
 html {
   color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -49,6 +50,17 @@ body {
 
 * {
   border-color: var(--border-soft);
+}
+
+::selection {
+  background: var(--text-primary);
+  color: var(--void);
+}
+
+:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* ---------- Scrollbar ---------- */
@@ -92,6 +104,19 @@ body {
 
 .bg-radial-fade {
   background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%);
+}
+
+/* ---------- Hairline divider with a soft centered glow ---------- */
+.divider-glow {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-strong) 20%,
+    rgba(255, 255, 255, 0.55) 50%,
+    var(--border-strong) 80%,
+    transparent
+  );
 }
 
 .no-scrollbar::-webkit-scrollbar {

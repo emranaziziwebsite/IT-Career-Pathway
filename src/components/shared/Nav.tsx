@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Rocket, Search, Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,17 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { t, locale, setLocale } = useLocale();
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const links = [
     { href: "/", label: t("nav.careers") },
@@ -22,10 +32,15 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border-soft bg-void/80 backdrop-blur-lg">
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b backdrop-blur-lg transition-colors duration-300",
+        scrolled ? "border-border-strong bg-void/90 shadow-lg shadow-black/40" : "border-border-soft bg-void/80"
+      )}
+    >
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-display text-lg font-bold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base shadow-lg shadow-white/20">
+        <Link href="/" className="group flex items-center gap-2 font-display text-lg font-bold tracking-tight">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base shadow-lg shadow-white/20 transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-105">
             <Rocket size={16} className="text-black" />
           </span>
           <span className="hidden text-gradient sm:inline">{t("nav.brand")}</span>
@@ -39,13 +54,16 @@ export default function Nav({ onSearchClick }: { onSearchClick: () => void }) {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
+                  "relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
                   active
                     ? "bg-white/15 text-white"
                     : "text-text-secondary hover:bg-white/8 hover:text-text-primary"
                 )}
               >
                 {link.label}
+                {active && (
+                  <span className="absolute inset-x-3.5 -bottom-3 h-[2px] rounded-full bg-white" />
+                )}
               </Link>
             );
           })}
